@@ -1,2 +1,2 @@
 # UNT_Class_Scheduler
-A webapp for helping manage classroom assignment at UNT
+A desktop app for helping to create and modify the UNT Discovery Park Course Schedule for the CSE department
