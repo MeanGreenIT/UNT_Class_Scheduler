@@ -31,7 +31,7 @@ int main(int, char**)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_DisplayMode current;
     SDL_GetCurrentDisplayMode(0, &current);
-    SDL_Window *window = SDL_CreateWindow("Anagram Detector", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 300, SDL_WINDOW_OPENGL);
+    SDL_Window *window = SDL_CreateWindow("Schedule Assistant", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     SDL_GLContext glcontext = SDL_GL_CreateContext(window);
     gl3wInit();
 
@@ -47,11 +47,9 @@ int main(int, char**)
     bool show_main_window = true;
 
     //Varibles
-    static char userInput[128] = "listen";
-    static char output[1024*16] = "Results";
-    static int results = 0;
+    int window_height = current.h;
+    int window_width = current.w;
 
-    ImTextureID myImageTextureId2 = 0;
     // Main loop
     bool done = false;
     while (!done)
@@ -68,11 +66,13 @@ int main(int, char**)
         //Display Main Window
         if(show_main_window)
         {
+            window_height = current.h;
+            window_width = current.w;
             ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
-            ImGui::SetNextWindowSize(ImVec2(800,600), ImGuiCond_Always);
+            ImGui::SetNextWindowSize(ImVec2(window_width,window_height), ImGuiCond_Always);
             ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);    //Disable Window Rounding
-            ImGui::Begin("MainMenu", &show_main_window, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-
+            ImGui::Begin("MainMenu", &show_main_window, ImGuiWindowFlags_NoTitleBar);
+            ImGui::Text("testing");
             
 
             ImGui::End();
