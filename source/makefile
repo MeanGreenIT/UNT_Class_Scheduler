@@ -29,6 +29,8 @@ ifeq ($(UNAME_S), Linux) #LINUX
 	CXXFLAGS = -I../libs/imgui -I../libs/gl3w `sdl2-config --cflags`
 	CXXFLAGS += -D"IMGUI_INCLUDE_IMGUI_USER_H" -D"IMGUI_INCLUDE_IMGUI_USER_INL"
 	CXXFLAGS += -Wall -Wformat
+	CXXFLAGS += -L/usr/include/mysql -lmysqlclient -I/usr/include/mysql
+	CXXFLAGS += -std=c++11
 	CFLAGS = $(CXXFLAGS)
 endif
 
