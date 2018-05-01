@@ -10,6 +10,8 @@
 #include <mysql.h>
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <string>
 #include <stdio.h>
 #include <GL/gl3w.h>    // This is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
@@ -37,6 +39,8 @@ int main(int, char**)
     SDL_Window *window = SDL_CreateWindow("Schedule Assistant", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 1024, SDL_WINDOW_OPENGL | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     SDL_GLContext glcontext = SDL_GL_CreateContext(window);
     gl3wInit();
+
+    std::srand(std::time(0));
 
     // Setup ImGui binding
     ImGui_ImplSdlGL3_Init(window);
@@ -240,14 +244,36 @@ int main(int, char**)
                     virtual ~MyListViewItem() {}
                 };
 
-                lv.items.resize(2);
+                lv.items.resize(200);
                 MyListViewItem* item;
-                item = (MyListViewItem*) ImGui::MemAlloc(sizeof(MyListViewItem));   // MANDATORY (ImGuiListView::~ImGuiListView() will delete these with ImGui::MemFree(...))
-                IMIMPL_PLACEMENT_NEW(item) MyListViewItem(1,1030,"COMPUTER SCIENCE I", 285,89,3,"MWF","15:00:00","15:50:00", "ESSC 255", "Shrestha Pradhumna Lal");
+
+                for(int i=0, isz=(int)lv.items.size();i<isz;i++){
+                    item = (MyListViewItem*) ImGui::MemAlloc(sizeof(MyListViewItem));   // MANDATORY (ImGuiListView::~ImGuiListView() will delete these with ImGui::MemFree(...))
+                    IMIMPL_PLACEMENT_NEW(item) MyListViewItem(
+                        i,
+                        std::rand()%1030 + 3000,
+                        "Computer Science ",
+                        std::rand()%200,
+                        std::rand()%200,
+                        std::rand()%200,
+                        "MWF",
+                        "15:00:00",
+                        "15:50:00",
+                        "ESSC 255",
+                        "Best Professor"
+                        );
+                    lv.items[i] = item;
+                }
+                /*IMIMPL_PLACEMENT_NEW(item) MyListViewItem(1,1030,"COMPUTER SCIENCE I", 285,89,3,"MWF","15:00:00","15:50:00", "ESSC 255", "Shrestha Pradhumna Lal");
                 lv.items[0] = item;
                 item = (MyListViewItem*) ImGui::MemAlloc(sizeof(MyListViewItem));   // MANDATORY (ImGuiListView::~ImGuiListView() will delete these with ImGui::MemFree(...))
                 IMIMPL_PLACEMENT_NEW(item) MyListViewItem(2,1030,"COMPUTER SCIENCE I", 130,130,9,"MWF","10:30:00","11:20:00", "NTDP B185", "Thompson Sr. Mark Anothony");
-                lv.items[1] = item;
+                lv.items[1] = item;*/
+
+                if (ImGui::Button("Scroll to selected row")) lv.scrollToSelectedRow();ImGui::SameLine();
+                ImGui::Text("selectedRow:%d selectedColumn:%d isInEditingMode:%s",lv.getSelectedRow(),lv.getSelectedColumn(),lv.isInEditingMode() ? "true" : "false");
+
+
                 static int maxListViewHeight=200;                             // optional: by default is -1 = as height as needed
                 ImGui::SliderInt("ListView Height (-1=full)",&maxListViewHeight,-1,500);// Just Testing "maxListViewHeight" here:
 
