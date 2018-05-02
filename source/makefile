@@ -15,8 +15,8 @@
 #CXX = clang++
 
 EXE = CSE_Schedule_Assistant
-OBJS = main.o imgui_impl_sdl_gl3.o
-OBJS += ../libs/imgui/imgui.o ../libs/imgui/imgui_demo.o ../libs/imgui/imgui_draw.o
+OBJS = main.o imgui_impl_sdl_gl3.o datarow.o
+OBJS += ../libs/imgui/imgui.o ../libs/imgui/imgui_demo.o ../libs/imgui/imgui_draw.o 
 OBJS += ../libs/gl3w/GL/gl3w.o
 
 UNAME_S := $(shell uname -s)
