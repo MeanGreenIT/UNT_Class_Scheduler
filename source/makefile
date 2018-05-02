@@ -50,6 +50,8 @@ ifeq ($(findstring MINGW,$(UNAME_S)),MINGW)
    CXXFLAGS = -I../libs/imgui -I../libs/gl3w `pkg-config --cflags sdl2`
    CXXFLAGS += -D"IMGUI_INCLUDE_IMGUI_USER_H" -D"IMGUI_INCLUDE_IMGUI_USER_INL"
    CXXFLAGS += -Wall -Wformat
+   CXXFLAGS += -L/usr/include/mysql -lmysqlclient -I/usr/include/mysql
+   CXXFLAGS += -std=c++11
    CFLAGS = $(CXXFLAGS)
 endif
 
