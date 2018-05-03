@@ -1,0 +1,8 @@
+
+libs/mysql/
+
+*.o
+
+*.exe
+
+source/imgui\.ini
