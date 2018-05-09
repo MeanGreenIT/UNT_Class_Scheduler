@@ -57,10 +57,15 @@ int main(int, char**)
     //Show Window Variables
     bool show_main_window = true;
 
+    //Display Variables
+    int window_height = SDL_GetWindowSurface(window)->h;
+    int window_width = SDL_GetWindowSurface(window)->w;
+
+    //File Browsing Variables
+    const char* startingFolder = "./";
+    const char* optionalFileExtensionFilterString = ".csv";
 
     //Varibles
-    int window_height = current.h;
-    int window_width = current.w;
     static char db_username[32] = "";
     static char db_password[32] = "";
     static char db_host[32] = "";
@@ -87,9 +92,6 @@ int main(int, char**)
                 done = true;
         }
         ImGui_ImplSdlGL3_NewFrame(window);
-
-        window_height = SDL_GetWindowSurface(window)->h;
-        window_width = SDL_GetWindowSurface(window)->w;
 
         //Display Main Window
         if(show_main_window)
@@ -132,6 +134,24 @@ int main(int, char**)
                 if(ImGui::Button("Pull"))
                 {
                     pullSQL = true;
+                }
+                ImGui::SameLine();
+                //File Browser
+                ImGui::Text("Please choose a CSV file: ");
+                ImGui::SameLine();
+                const bool browseButtonPressed = ImGui::Button("...");
+                static ImGuiFs::Dialog fsInstance;
+                const char* chosenPath = fsInstance.chooseFileDialog(browseButtonPressed,startingFolder,optionalFileExtensionFilterString);
+                if (strlen(chosenPath)>0) {
+                    // A path (chosenPath) has been chosen right now. However we can retrieve it later using: fsInstance.getChosenPath()
+                }
+                if (strlen(fsInstance.getChosenPath())>0){
+                    ImGui::Text("Chosen File: \"%s\"",fsInstance.getChosenPath());
+                    ImGui::SameLine();
+                    if(ImGui::Button("Replace Current Table with CSV"))
+                    {
+
+                    }
                 }
             }
 
@@ -258,8 +278,8 @@ void DataDisplay(bool *updateData, std::vector<DataRow*> SQLData){
             // return fieldPointers[column]
 
         // (Optional) ctr for setting values faster later
-        MyListViewItem(int _id,int _catalog,int _section,const char* _course, int _enrollCap, int _enrollTotal, int _waitTotal, const char* _dotw, const char* _startTime, const char* _endTime, const char* _roomID, const char* _professor)
-            : ID(_id), catalog(_catalog), enrollCap(_enrollCap), enrollTotal(_enrollTotal), waitTotal(_waitTotal) {
+        MyListViewItem(int _id, int _catalog, int _section, const char* _course, int _enrollCap, int _enrollTotal, int _waitTotal, const char* _dotw, const char* _startTime, const char* _endTime, const char* _roomID, const char* _professor)
+            : ID(_id), catalog(_catalog), section(_section), enrollCap(_enrollCap), enrollTotal(_enrollTotal), waitTotal(_waitTotal) {
             IM_ASSERT(_course && strlen(_course)<1024);
             IM_ASSERT(_dotw && strlen(_dotw)<16);
             IM_ASSERT(_startTime && strlen(_startTime)<16);
