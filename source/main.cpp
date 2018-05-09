@@ -40,7 +40,7 @@ int main(int, char**)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_DisplayMode current;
     SDL_GetCurrentDisplayMode(0, &current);
-    SDL_Window *window = SDL_CreateWindow("Schedule Assistant", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 1024, SDL_WINDOW_OPENGL | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+    SDL_Window *window = SDL_CreateWindow("Schedule Assistant", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 800, SDL_WINDOW_OPENGL);
     SDL_GLContext glcontext = SDL_GL_CreateContext(window);
     gl3wInit();
 
@@ -88,15 +88,17 @@ int main(int, char**)
         }
         ImGui_ImplSdlGL3_NewFrame(window);
 
+        window_height = SDL_GetWindowSurface(window)->h;
+        window_width = SDL_GetWindowSurface(window)->w;
+
         //Display Main Window
         if(show_main_window)
         {
-            window_height = current.h;
-            window_width = current.w;
+            
             ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
             ImGui::SetNextWindowSize(ImVec2(window_width,window_height), ImGuiCond_Always);
             ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);    //Disable Window Rounding
-            ImGui::Begin("MainMenu", &show_main_window, ImGuiWindowFlags_NoTitleBar);
+            ImGui::Begin("MainMenu", &show_main_window, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
             //First Row, Username/Password
             {
                 ImGui::PushItemWidth(256);
