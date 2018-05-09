@@ -303,16 +303,16 @@ void DataDisplay(bool *updateData, std::vector<DataRow*> SQLData){
         //ListViewHeader("Lablel","ToolTip", TYPE, precision, starting width, prefix, suffix, sorted, editable);
         lv.headers.push_back(ImGui::ListViewHeader("ID", "PrimaryKey",ImGui::ListView::HT_INT, -1, 40));
         lv.headers.push_back(ImGui::ListViewHeader("Catalog", "Student Catalog Number",ImGui::ListView::HT_INT, -1, 100,"","",true));
-        lv.headers.push_back(ImGui::ListViewHeader("Section", "",ImGui::ListView::HT_INT, -1, 100));
-        lv.headers.push_back(ImGui::ListViewHeader("Course", "",ImGui::ListView::HT_STRING, -1, 200));
-        lv.headers.push_back(ImGui::ListViewHeader("Enroll Cap", "",ImGui::ListView::HT_INT, -1, 100));
-        lv.headers.push_back(ImGui::ListViewHeader("Enroll Total", "",ImGui::ListView::HT_INT, -1, 100));
-        lv.headers.push_back(ImGui::ListViewHeader("Wait Listed", "",ImGui::ListView::HT_INT, -1, 100));
+        lv.headers.push_back(ImGui::ListViewHeader("Section", NULL,ImGui::ListView::HT_INT, -1, 100));
+        lv.headers.push_back(ImGui::ListViewHeader("Course", NULL,ImGui::ListView::HT_STRING, -1, 200,"","",true));
+        lv.headers.push_back(ImGui::ListViewHeader("Enroll Cap", NULL,ImGui::ListView::HT_INT, -1, 100));
+        lv.headers.push_back(ImGui::ListViewHeader("Enroll Total", NULL,ImGui::ListView::HT_INT, -1, 100));
+        lv.headers.push_back(ImGui::ListViewHeader("Wait Listed", NULL,ImGui::ListView::HT_INT, -1, 100));
         lv.headers.push_back(ImGui::ListViewHeader("DOTW", "Day of the Week",ImGui::ListView::HT_STRING, -1, 80));
-        lv.headers.push_back(ImGui::ListViewHeader("StartTime", "",ImGui::ListView::HT_STRING, -1, 100));
-        lv.headers.push_back(ImGui::ListViewHeader("EndTime", "",ImGui::ListView::HT_STRING, -1, 100));
+        lv.headers.push_back(ImGui::ListViewHeader("StartTime", NULL,ImGui::ListView::HT_STRING, -1, 100));
+        lv.headers.push_back(ImGui::ListViewHeader("EndTime", NULL,ImGui::ListView::HT_STRING, -1, 100));
         lv.headers.push_back(ImGui::ListViewHeader("RoomID", "FacilID",ImGui::ListView::HT_STRING, -1, 100));
-        lv.headers.push_back(ImGui::ListViewHeader("Professor", "",ImGui::ListView::HT_STRING, -1, 400));
+        lv.headers.push_back(ImGui::ListViewHeader("Professor", NULL,ImGui::ListView::HT_STRING, -1, 400));
         
     
         lv.items.resize(200);
