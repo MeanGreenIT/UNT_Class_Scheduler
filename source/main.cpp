@@ -7,12 +7,14 @@
 #include "imgui.h"
 #include "imgui_impl_sdl_gl3.h"
 #include "datarow.h"
+#include "csv_parse.h"
 
 #include <mysql.h>
 
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 #include <string>
 #include <stdio.h>
 #include <GL/gl3w.h>    // This is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
@@ -131,7 +133,7 @@ int main(int, char**)
             }
             //Third Row
             {
-                if(ImGui::Button("Pull"))
+                if(ImGui::Button("Pull From DB"))
                 {
                     pullSQL = true;
                 }
@@ -150,7 +152,9 @@ int main(int, char**)
                     ImGui::SameLine();
                     if(ImGui::Button("Replace Current Table with CSV"))
                     {
-
+                        std::string csvFilePath = fsInstance.getChosenPath();
+                        SQLData = ParseCSV(csvFilePath);
+                        updateData = true;
                     }
                 }
             }
@@ -237,7 +241,6 @@ int main(int, char**)
 
 void DataDisplay(bool *updateData, std::vector<DataRow*> SQLData){
     static ImGui::ListView lv;
-    //Loop through once, otherwise it will keep repopulating the data on every call
     class MyListViewItem : public ImGui::ListView::ItemBase {
     public:
 
@@ -295,6 +298,7 @@ void DataDisplay(bool *updateData, std::vector<DataRow*> SQLData){
         }
         virtual ~MyListViewItem() {}
     };
+    //Loop through once, otherwise it will keep repopulating the data on every call
     if(lv.headers.size()==0){
         //ListViewHeader("Lablel","ToolTip", TYPE, precision, starting width, prefix, suffix, sorted, editable);
         lv.headers.push_back(ImGui::ListViewHeader("ID", "PrimaryKey",ImGui::ListView::HT_INT, -1, 40));
